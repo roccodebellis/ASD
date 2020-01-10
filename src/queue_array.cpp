@@ -25,9 +25,18 @@ int main(void){
 
 	std::cout << "queue: " << queue << std::endl;
 
-	for(int i=0; i<10; i++)
-			queue.enqueue(i);
+	queue_array<int> ass_queue(11);
+	ass_queue = queue;
 
+	std::cout << "asseg: " << queue << std::endl;
+
+	queue.enqueue(0);
+	std::cout <<" enqueue:\tqueue: " << queue << std::endl;
+
+	for(int i=0; i<10; i++){
+			queue.enqueue(i);
+			std::cout << i <<" enqueue:\tqueue: " << queue << std::endl;
+	}
 	std::cout << "queue: " << queue << std::endl;
 
 	std::cout << "===============" << std::endl;
@@ -88,9 +97,10 @@ int main(void){
 	fifo.dequeue();std::cout << "27queue2: " << fifo << std::endl;
 	fifo.dequeue();std::cout << "28queue2: " << fifo << std::endl;
 	fifo.dequeue();std::cout << "29queue2: " << fifo << std::endl;
+	fifo.dequeue();std::cout << "30queue2: " << fifo << std::endl;
+	fifo.dequeue();
 
-
-	queue_array<int> queue4;
+	queue_array<int> queue4(15);
 	queue4 = queue;
 	queue_array<int> queue5 = queue;
 

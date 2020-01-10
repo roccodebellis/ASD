@@ -9,8 +9,8 @@ const int MAX_DIMENSION = 10;
 
 template <class T>
 class queue_array : public queue<T> {
-	//friend bool operator==(const queue<T>& x, const queue<T>& y); //TODO
-	//friend bool operator<(const queue<T>& x, const queue<T>& y);  //TODO
+	//friend bool operator==(const queue<T>& x, const queue<T>& y); //TODO non implementato
+	//friend bool operator<(const queue<T>& x, const queue<T>& y);  //TODO non implementato
 
 public:
 	typedef typename queue<T>::value_type value_type;
@@ -30,13 +30,12 @@ public:
 	bool empty() const;
 	value_type top() const;
 	void dequeue();
-	void enqueue(const value_type);
+	void enqueue(const value_type); //Disponibili 3 politiche: accetta duplicati, ignora il nuovo, dimentica il vecchio
 
 	//service function
 	void print() const;
 
-	queue_array<T>& operator=(const queue_array<T> &);
-	//queue_array<value_type>& operator=(const queue_array<value_type> &);
+	//queue_array<T>& operator=(const queue_array<T> &); //Utilizzo quello implementato dal compilatore
 
 	template <class U>
 	friend std::ostream & operator<<(std::ostream &, const queue_array<U> &);
@@ -47,6 +46,8 @@ private:
 
 	//private service funzions
 	void change_dimension(const int);
+	bool is_present(const value_type) const;
+	void remove(const value_type);
 };
 
 template <class T>
@@ -61,7 +62,7 @@ queue_array<T>::queue_array(int dim){
 	create();
 }
 
-template <class T>
+template <class T> //TODO sicuramente da riscrivere
 queue_array<T>::queue_array(const queue_array<value_type> & queue_copy){
 	max_dimension = queue_copy.max_dimension;
 	create();
@@ -92,6 +93,7 @@ bool queue_array<T>::empty() const {
 
 template <class T>
 typename queue_array<T>::value_type queue_array<T>::top() const {
+	//assert (!empty());
 	if(!empty())
 		return (elements[head]);
 	else
@@ -100,47 +102,70 @@ typename queue_array<T>::value_type queue_array<T>::top() const {
 
 template <class T>
 void queue_array<T>::dequeue(){
+	//assert (!empty());
 	if(!empty()){
-		head = (head+1) % max_dimension; //TODO WHATTTTTT ????????????
+		head = (head+1) % max_dimension;
 		length--;
 	} else
 		throw empty_queue();
 }
 
+/* INCODA BASE */
 template <class T>
 void queue_array<T>::enqueue(const value_type element){
 	if(length == max_dimension)
-		change_dimension(max_dimension++);
+		change_dimension(max_dimension+1);
 	elements[(head+length) % max_dimension] = element;
 	length++;
 	return;
 }
 
+/* POLITICA INCODA IGNORA IL NUOVO elemento
 template <class T>
-void queue_array<T>::print() const {
-	std::cout<< "Index\tValue" <<std::endl;
-	for(int i=length-1;i>=0;i--)
-		std::cout << length-1-i << "\t" << elements[(i+head) % max_dimension] << std::endl;
+void queue_array<T>::enqueue(const value_type element){
+	if(length == max_dimension)
+		change_dimension(max_dimension+1);
+	if(!is_present(element)){
+		elements[(head+length) % max_dimension] = element;
+		length++;
+	}
 	return;
-}
+} */
+
+/* POLITICA INCODA DIMENTICA IL VECCHIO elemento
+template <class T>
+void queue_array<T>::enqueue(const value_type element){
+	if(length == max_dimension)
+		change_dimension(max_dimension+1);
+	if(is_present(element)){
+		remove(element);
+	}
+	elements[(head+length) % max_dimension] = element;
+	length++;
+
+	return;
+} */
 
 template <class T>
 void queue_array<T>::change_dimension(int new_dimension){
 	if(new_dimension > max_dimension){
-		max_dimension = new_dimension;
 		value_type* tmp = new value_type[new_dimension];
 		for(int i=0; i<length; i++)
-			tmp[i] = elements[i];
+			tmp[i] = elements[(head + i) % max_dimension];
 		delete[] elements;
 		elements = tmp;
+		max_dimension = new_dimension;
+		head = 0;
 	}
 	return;
 }
 
+/**
+ * FUNZIONA COME LA COPIA BIT A BIT IMPLEMENTATA DAL COMPILATORE
+
 template <class T>
 queue_array<T>& queue_array<T>::operator=(const queue_array<T> & q){
-	//TODO: secondo me è da migliorare
-	//posso semplicemente chiamare il costruttuore per copia ed ottenere lo stesso risultato
+
 	if(this==&q) return *this;
 
 	if(max_dimension != q.max_dimension){
@@ -152,22 +177,44 @@ queue_array<T>& queue_array<T>::operator=(const queue_array<T> & q){
 	head = q.head;
 	length = q.length;
 
-	for(int i=head; i<length; i++)
-		elements[i] = q.elements[i];
+	elements = q.elements;
 	return *this;
 }
+ */
 
 template <class T>
 std::ostream & operator<<(std::ostream & os, const queue_array<T> & q){
-	os << "H:" <<q.head << " L:" << q.length << " M:" << q.max_dimension << " "; //TODO DELETE
+	//os << "H:" <<q.head << " L:" << q.length << " M:" << q.max_dimension << " ";
 	os << "[";
 	for(int i=0; i<q.length; i++){
-		os << q.elements[(q.head+i) % q.max_dimension] << "[" << &(q.elements[(q.head+i) % q.max_dimension])  << "]";
+		//os << q.elements[(q.head+i) % q.max_dimension] << "[" << &(q.elements[(q.head+i) % q.max_dimension])  << "]"; //per stampare le locazioni di memoria
+		os << q.elements[(q.head + i) % q.max_dimension];
 		if(i<q.length-1)
 			os << ", ";
 	}
 	os << "]";
 	return os;
+}
+
+template <class T>
+bool queue_array<T>::is_present(const value_type element) const {
+	for(int i=0; i<length; i++)
+		if(elements[(head + i)% max_dimension] == element)
+			return true;
+	return false;
+}
+
+template <class T>
+void queue_array<T>::remove(const value_type element) {
+	//assert(is_present(element))
+	bool finded = false;
+	for(int i=0; i<length; i++)
+		if (elements[(head + i)% max_dimension] == element) {
+			finded = true;
+		} else if (finded) {
+			elements[(head + i - 1) % max_dimension] = elements[(head + i) % max_dimension];
+		}
+	length--;
 }
 
 #endif /* QUEUE_ARRAY_H_ */
