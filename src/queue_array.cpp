@@ -1,6 +1,6 @@
 #import "queue_array.h"
 
-/* TEST */
+/* TEST
 int main(void){
 	queue_array<int> queue;
 	queue_array<int> queue2(20);
@@ -113,5 +113,4 @@ int main(void){
 	return 0;
 }
 
-
-
+*/

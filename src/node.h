@@ -1,14 +1,9 @@
-/*
- * node.h
- *
- *  Created on: Jan 3, 2020
- *      Author: roccodebellis
- */
-
 #ifndef NODE_H_
 #define NODE_H_
 
 #include <cstdlib>
+//#define NULL 0
+//#define NULL nullptr
 
 template <class T>
 class node{
@@ -86,7 +81,5 @@ std::ostream & operator<<(std::ostream & os, const node<T> & n){
 	return os << n.get_value();
 	//return os << "("<<n.get_value() << ": "<<n.get_next() <<")"; //TODO: ripristinare sopra
 }
-
-
 
 #endif /* NODE_H_ */

@@ -183,7 +183,7 @@ queue_array<T>& queue_array<T>::operator=(const queue_array<T> & q){
  */
 
 template <class T>
-std::ostream & operator<<(std::ostream & os, const queue_array<T> & q){
+std::ostream & operator<<(std::ostream & os, const queue_array<T> & q) {
 	//os << "H:" <<q.head << " L:" << q.length << " M:" << q.max_dimension << " ";
 	os << "[";
 	for(int i=0; i<q.length; i++){
