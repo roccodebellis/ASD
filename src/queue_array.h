@@ -149,7 +149,7 @@ void queue_array<T>::enqueue(const value_type element){
 template <class T>
 void queue_array<T>::change_dimension(int new_dimension){
 	if(new_dimension > max_dimension){
-		value_type* tmp = new value_type[new_dimension];
+		value_type * tmp = new value_type[new_dimension];
 		for(int i=0; i<length; i++)
 			tmp[i] = elements[(head + i) % max_dimension];
 		delete[] elements;

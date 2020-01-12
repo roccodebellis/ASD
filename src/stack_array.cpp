@@ -1,10 +1,3 @@
-/*
- * stack_array.cpp
- *
- *  Created on: Jan 3, 2020
- *      Author: roccodebellis
- */
-
 #include "stack_array.h"
 
 /* TEST

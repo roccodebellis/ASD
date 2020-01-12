@@ -18,5 +18,18 @@ struct empty_queue:public std::length_error {
 	empty_queue():length_error("Empty queue!"){};
 };
 
+class illegalParameterValue {
+public:
+	illegalParameterValue() : message("Illegal parameter value") {}
+	illegalParameterValue(char * theMessage) {
+		message = theMessage;
+	}
+	void outputMessage() {
+		std::cout << message << std::endl;
+	}
+private:
+	char * message;
+};
+
 
 #endif /* EXCEPTIONS_H_ */

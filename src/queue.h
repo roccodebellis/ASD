@@ -9,7 +9,7 @@
 #define QUEUE_H_
 
 template <class T>
-class queue{
+class queue {
 public:
 	typedef T value_type;
 
