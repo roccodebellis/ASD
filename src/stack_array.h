@@ -128,7 +128,7 @@ template <class T>
 void stack_array<T>::change_dimension(const int new_dimension){
 	if(new_dimension > max_dimension){
 		max_dimension = new_dimension;
-		value_type* temp = new value_type[new_dimension];
+		value_type * temp = new value_type[new_dimension];
 		for(int i=0; i<head; i++)
 			temp[i] = elements[i];
 		delete[] elements;

@@ -31,5 +31,12 @@ private:
 	char * message;
 };
 
+struct full_dictionary : public std::length_error {
+	full_dictionary():length_error("Dictionary is full!"){};
+};
+
+struct key_not_exist : public std::invalid_argument {
+	key_not_exist():invalid_argument("Key does not exist!"){};
+};
 
 #endif /* EXCEPTIONS_H_ */
