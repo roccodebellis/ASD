@@ -18,8 +18,8 @@ public:
 
 	struct _atom{
 		node parent; //TODO: check name
-		node sx;
-		node dx;
+		node left;
+		node right;
 		value_type value;
 	};
 
@@ -40,10 +40,10 @@ public:
 	bool empty() const;
 	node root() const;
 	node parent(const node) const;
-	node child_sx(const node) const;
-	node child_dx(const node) const;
-	bool sx_empty(const node) const;
-	bool dx_empty(const node) const;
+	node left(const node) const;
+	node right(const node) const;
+	bool left_empty(const node) const;
+	bool right_empty(const node) const;
 	//void costr(bintree<T,N>); //TODO
 	void erase(const node);
 	value_type read(const node) const;
@@ -51,8 +51,8 @@ public:
 
 	//service function
 	void insert_root(const value_type);
-	void insert_sx(const node, const value_type);
-	void insert_dx(const node, const value_type);
+	void insert_left(const node, const value_type);
+	void insert_right(const node, const value_type);
 
 	void pre_view(const node) const;
 	void post_view(const node) const;
@@ -100,9 +100,9 @@ void bintree_array<T>::create(){
 	tree = new _atom[max_length];
 	for(int i=0; i<max_length; i++){
 		tree[i].parent = NIL;
-		tree[i].sx = NIL;
-		tree[i].dx = NIL;
-		//tree[i].sx = (i+1)%max_length; //inizializza tutte le parti sx a succ pos libera
+		tree[i].left = NIL;
+		tree[i].right = NIL;
+		//tree[i].left = (i+1)%max_length; //inizializza tutte le parti left a succ pos libera
 	}
 }
 
@@ -115,8 +115,8 @@ bintree_array<T>::bintree_array(const bintree_array<node> & copy_bintree){
 	num_nodes = copy_bintree.num_nodes;
 	for(int i=0; i<max_length; i++){
 		tree[i].parent = copy_bintree.tree[i].parent;
-		tree[i].sx = copy_bintree.tree[i].sx;
-		tree[i].dx = copy_bintree.tree[i].dx;
+		tree[i].left = copy_bintree.tree[i].left;
+		tree[i].right = copy_bintree.tree[i].right;
 		tree[i].value = copy_bintree.tree[i].value;
 	}
 }
@@ -153,47 +153,47 @@ typename bintree_array<T>::node bintree_array<T>::parent(const node u_node) cons
 }
 
 template <class T>
-typename bintree_array<T>::node bintree_array<T>::child_sx(const node u_node) const {
-	//PRE: !empty(), u_node appartine T, ha un figlio sx
+typename bintree_array<T>::node bintree_array<T>::left(const node u_node) const {
+	//PRE: !empty(), u_node appartine T, ha un figlio left
 	//TODO: non controllo l'appartenenenza di u_node a T
 	//FIXME if(u_node>=0 && u_node<max_dimension) else throw node_not_valid();
 	if(!empty())
-		if (!sx_empty(u_node))
-			return tree[u_node].sx;
+		if (!left_empty(u_node))
+			return tree[u_node].left;
 		else throw node_not_valid();
 	else throw empty_bintree();
 }
 
 template <class T>
-typename bintree_array<T>::node bintree_array<T>::child_dx(const node u_node) const {
-	//PRE: !empty(), u_node appartine T, ha un figlio dx
+typename bintree_array<T>::node bintree_array<T>::right(const node u_node) const {
+	//PRE: !empty(), u_node appartine T, ha un figlio right
 	//TODO: non controllo l'appartenenenza di u_node a T
 	//FIXME if(u_node>=0 && u_node<max_dimension) else throw node_not_valid();
 	if(!empty())
-		if (!dx_empty(u_node))
-			return tree[u_node].dx;
+		if (!right_empty(u_node))
+			return tree[u_node].right;
 		else throw node_not_valid();
 	else throw empty_bintree();
 }
 
 template <class T>
-bool bintree_array<T>::sx_empty(const node u_node) const {
+bool bintree_array<T>::left_empty(const node u_node) const {
 	//PRE: !empty(), u_node appartine T,
 	//TODO: non controllo l'appartenenenza di u_node a T
 
 	//FIXME if(u_node>=0 && u_node<max_dimension) else throw node_not_valid();
 	if(!empty())
-		return (tree[u_node].sx == NIL);
+		return (tree[u_node].left == NIL);
 	else throw empty_bintree();
 }
 
 template <class T>
-bool bintree_array<T>::dx_empty(const node u_node) const {
+bool bintree_array<T>::right_empty(const node u_node) const {
 	//PRE: !empty(), u_node appartine T,
 	//TODO: non controllo l'appartenenenza di u_node a T
 	//FIXME if(u_node>=0 && u_node<max_dimension) else throw node_not_valid();
 	if(!empty())
-		return (tree[u_node].dx == NIL);
+		return (tree[u_node].right == NIL);
 	else throw empty_bintree();
 }
 
@@ -201,17 +201,17 @@ template <class T>
 void bintree_array<T>::erase(const node u_node){
 	//PRE: !empty(), u_node appartiene a N
 	//POST: T' è ottenuto da T eliminando il sottoalbero di radice u_node
-	//if(!empty()) jet in sx_empty() && dx_empty()
+	//if(!empty()) jet in left_empty() && right_empty()
 	if(u_node != NIL){
-		if(!sx_empty(u_node))
-			erase(tree[u_node].sx);
-		if(!dx_empty(u_node))
-			erase(tree[u_node].dx);
+		if(!left_empty(u_node))
+			erase(tree[u_node].left);
+		if(!right_empty(u_node))
+			erase(tree[u_node].right);
 		if(u_node != root_node){
-			if(tree[parent(u_node)].sx == u_node)
-				tree[parent(u_node)].sx = NIL;
-			else if(tree[parent(u_node)].dx == u_node)
-				tree[parent(u_node)].dx = NIL;
+			if(tree[parent(u_node)].left == u_node)
+				tree[parent(u_node)].left = NIL;
+			else if(tree[parent(u_node)].right == u_node)
+				tree[parent(u_node)].right = NIL;
 			free_node = u_node; //??
 			num_nodes--;
 		} else {
@@ -219,8 +219,8 @@ void bintree_array<T>::erase(const node u_node){
 			free_node = 0;
 			num_nodes = 0;
 		}
-		tree[u_node].sx = NIL;
-		tree[u_node].dx = NIL;
+		tree[u_node].left = NIL;
+		tree[u_node].right = NIL;
 		tree[u_node].parent = NIL;
 	} else throw node_not_valid();
 	//else throw empty_bintree();
@@ -256,8 +256,8 @@ void bintree_array<T>::insert_root(const value_type u_value) {
 		if(root_node == NIL){
 			root_node = free_node;
 
-			//tree[root_node].sx = NIL; //jet in crete()
-			//tree[root_node].dx = NIL; //jet in crete()
+			//tree[root_node].left = NIL; //jet in crete()
+			//tree[root_node].right = NIL; //jet in crete()
 			tree[root_node].value = u_value;
 
 			free_node = (tree[(free_node+1) % max_length].parent==NIL) ? (free_node+1) % max_length : find_free();
@@ -268,20 +268,20 @@ void bintree_array<T>::insert_root(const value_type u_value) {
 }
 
 template <class T>
-void bintree_array<T>::insert_sx(const node u_node,const value_type u_value) {
+void bintree_array<T>::insert_left(const node u_node,const value_type u_value) {
 	//PRE: !empty(), u appartiene N, sinistrovuoto(u,T)=true
-	//POST: N'=Nu{v}, T' è ottenuto da T aggiungendo v come figlio sx di u
-	//if(!empty()) jet in sx_empty()
+	//POST: N'=Nu{v}, T' è ottenuto da T aggiungendo v come figlio left di u
+	//if(!empty()) jet in left_empty()
 	//DELETE
 
 	if(u_node != NIL) //FIXME: || (u_node>=0 && u_node<max_lenght))
 		if(num_nodes < max_length)
-			if(sx_empty(u_node)){
-				tree[u_node].sx = free_node;
+			if(left_empty(u_node)){
+				tree[u_node].left = free_node;
 
 				tree[free_node].parent = u_node;
-				//tree[free_node].sx = NIL; //jet in crete()
-				//tree[free_node].dx = NIL; //jet in crete()
+				//tree[free_node].left = NIL; //jet in crete()
+				//tree[free_node].right = NIL; //jet in crete()
 				tree[free_node].value = u_value;
 
 				free_node = (tree[(free_node+1) % max_length].parent==NIL) ? (free_node+1) % max_length : find_free();
@@ -294,18 +294,18 @@ void bintree_array<T>::insert_sx(const node u_node,const value_type u_value) {
 }
 
 template <class T>
-void bintree_array<T>::insert_dx(const node u_node,const value_type u_value) {
+void bintree_array<T>::insert_right(const node u_node,const value_type u_value) {
 	//PRE: !empty(), u appartiene N, sinistrovuoto(u,T)=true
-	//POST: N'=Nu{v}, T' è ottenuto da T aggiungendo v come figlio sx di u
-	//if(!empty()) jet in dx_empty
+	//POST: N'=Nu{v}, T' è ottenuto da T aggiungendo v come figlio left di u
+	//if(!empty()) jet in right_empty
 	if(u_node != NIL) //FIXME: || (u_node>=0 && u_node<max_lenght))
 		if(num_nodes < max_length)
-			if(dx_empty(u_node)){
-				tree[u_node].dx = free_node;
+			if(right_empty(u_node)){
+				tree[u_node].right = free_node;
 
 				tree[free_node].parent = u_node;
-				//tree[free_node].sx = NIL; //jet in crete()
-				//tree[free_node].dx = NIL; //jet in crete()
+				//tree[free_node].left = NIL; //jet in crete()
+				//tree[free_node].right = NIL; //jet in crete()
 				tree[free_node].value = u_value;
 
 				free_node = (tree[(free_node+1) % max_length].parent==NIL) ? (free_node+1) % max_length : find_free();
@@ -320,26 +320,26 @@ void bintree_array<T>::insert_dx(const node u_node,const value_type u_value) {
 template <class T>
 void bintree_array<T>::print(node n, std::ostream & os) const {
 	/*if(n == root_node){
-		std::cout << num_nodes <<"\tsx\tp\tdx\tv" << std::endl;
+		std::cout << num_nodes <<"\tleft\tp\tright\tv" << std::endl;
 		for(int i=0; i<num_nodes; i++){
-			std::cout <<"\t" << tree[i].sx
+			std::cout <<"\t" << tree[i].left
 					<<"\t" << tree[i].parent
-					<<"\t" << tree[i].dx
+					<<"\t" << tree[i].right
 					<<"\t" << tree[i].value
 					<< std::endl;
 		}
 	}*/
 
 	os << "[" << read(n);
-	if(!(sx_empty(n) && dx_empty(n))){
-		if(!sx_empty(n)){
-			os << " , sx: ";
-			print(child_sx(n),os);
+	if(!(left_empty(n) && right_empty(n))){
+		if(!left_empty(n)){
+			os << " , left: ";
+			print(left(n),os);
 		} else os << " , NIL";
 		os << ",";
-		if(!dx_empty(n)){
-			os << "dx: ";
-			print(child_dx(n),os);
+		if(!right_empty(n)){
+			os << "right: ";
+			print(right(n),os);
 		} else os << " , NIL";
 	}
 	os << "]";
@@ -351,7 +351,7 @@ typename bintree_array<T>::node bintree_array<T>::find_free() const {
 	node index_free_node = NIL; //FIXME forse restituisco NIL
 	for(int i=0; i<max_length; i++){
 		//FIXME utilizzare num_node e %max_length
-		if(tree[i].parent == NIL && tree[i].sx == NIL && tree[i].dx == NIL){
+		if(tree[i].parent == NIL && tree[i].left == NIL && tree[i].right == NIL){
 			if(num_nodes > 1)
 				return i;
 			else if(num_nodes==1 && root_node==0) //FIXME: no sense
@@ -365,23 +365,23 @@ typename bintree_array<T>::node bintree_array<T>::find_free() const {
 template <class T>
 void bintree_array<T>::pre_view(const node n) const {
 	std::cout << read(n) <<" ";
-	if(!sx_empty(n)) pre_view(child_sx(n));
-	if(!dx_empty(n)) pre_view(child_dx(n));
+	if(!left_empty(n)) pre_view(left(n));
+	if(!right_empty(n)) pre_view(right(n));
 }
 
 template <class T>
 void bintree_array<T>::post_view(const node n) const {
-	if(!sx_empty(n)) post_view(child_sx(n));
-	if(!dx_empty(n)) post_view(child_dx(n));
+	if(!left_empty(n)) post_view(left(n));
+	if(!right_empty(n)) post_view(right(n));
 	std::cout << read(n) <<" ";
 }
 
 
 template <class T>
 void bintree_array<T>::symmetric_view(const node n) const {
-	if(!sx_empty(n)) symmetric_view(child_sx(n));
+	if(!left_empty(n)) symmetric_view(left(n));
 	std::cout << read(n) <<" ";
-	if(!dx_empty(n)) symmetric_view(child_dx(n));
+	if(!right_empty(n)) symmetric_view(right(n));
 }
 
 template <class T>

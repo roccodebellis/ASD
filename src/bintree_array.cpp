@@ -1,6 +1,6 @@
 #include <iostream>
 #include "bintree_array.h"
-
+/* TEST
 int main(void){
 	bintree_array<char> albero;
 
@@ -9,18 +9,18 @@ int main(void){
 	albero.insert_root('h');
 	//albero.insert_root(3);
 
-	albero.insert_dx(albero.root(),'c');
-	albero.insert_sx(albero.root(),'a');
-	albero.insert_sx(albero.child_sx(albero.root()),'d');
-	albero.insert_dx(albero.child_sx(albero.root()),'l');
+	albero.insert_right(albero.root(),'c');
+	albero.insert_left(albero.root(),'a');
+	albero.insert_left(albero.left(albero.root()),'d');
+	albero.insert_right(albero.left(albero.root()),'l');
 
-	albero.insert_sx(albero.child_dx(albero.root()),'p');
-	albero.insert_dx(albero.child_dx(albero.root()),'s');
+	albero.insert_left(albero.right(albero.root()),'p');
+	albero.insert_right(albero.right(albero.root()),'s');
 
-	albero.insert_sx(albero.child_dx(albero.child_sx(albero.root())),'o');
-	albero.insert_dx(albero.child_dx(albero.child_sx(albero.root())),'q');
+	albero.insert_left(albero.right(albero.left(albero.root())),'o');
+	albero.insert_right(albero.right(albero.left(albero.root())),'q');
 
-	//albero.erase(albero.child_sx(albero.root()));
+	//albero.erase(albero.left(albero.root()));
 
 	std::cout << albero << std::endl;
 
@@ -32,3 +32,4 @@ int main(void){
 	albero.symmetric_view(albero.root());
 	return 0;
 }
+*/

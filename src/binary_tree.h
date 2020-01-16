@@ -1,10 +1,10 @@
 /* *** ALBERI BINARI ***
  * è un particolare albero ordinato in cui ogni nodo ha al più due figli
- * si fa distinzione tra il figlio sx e il figlio dx di un nodo.
+ * si fa distinzione tra il figlio left e il figlio right di un nodo.
  * Questa proprietà è assai sottile, perchè impone che due alberi T e U aventi
  * gli stessi nodi, gli stessi figli per ogni nodo e la stessa radie, siano
- * distinti qualora un nodo u sia designato come figlio sx di un nodo v in T e
- * come figlio dx del medesimo nodo in U
+ * distinti qualora un nodo u sia designato come figlio left di un nodo v in T e
+ * come figlio right del medesimo nodo in U
  *
  */
 #ifndef BINARY_TREE_H_
@@ -25,18 +25,18 @@ public:
 	virtual bool empty() const=0;
 	virtual node root() const=0;
 	virtual node parent(const node) const =0; //padre
-	virtual node child_sx(const node) const=0;
-	virtual node child_dx(const node) const=0;
-	virtual bool sx_empty(const node) const=0;
-	virtual bool dx_empty(const node) const=0;
+	virtual node left(const node) const=0;
+	virtual node right(const node) const=0;
+	virtual bool left_empty(const node) const=0;
+	virtual bool right_empty(const node) const=0;
 	//virtual void costr(bintree<T,N>); //TODO
 	virtual void erase(const node) =0;
 	virtual value_type read(const node) const =0;
 	virtual void write(const node, const value_type)=0;
 
 	virtual void insert_root(const value_type)=0;
-	virtual void insert_sx(const node, const value_type)=0; //TODO non bisogna aggiungere anche delete?
-	virtual void insert_dx(const node, const value_type)=0;
+	virtual void insert_left(const node, const value_type)=0; //TODO non bisogna aggiungere anche delete?
+	virtual void insert_right(const node, const value_type)=0;
 
 	//service function
 	//virtual void pre_view(const node); //TODO
@@ -58,29 +58,29 @@ private:
 	//virtual void print(std::ostrem &) const;
 };
 
-/* //TODO
+/*
 template <class T, class N>
 void binary_tree<T,N>::pre_view(node n){
 	//esamina nodo
-	if(!sx_empty(n)) previus_view(child_sx(n));
-	if(!dx_empty(n)) previus_view(child_dx(n));
+	if(!left_empty(n)) previus_view(left(n));
+	if(!right_empty(n)) previus_view(right(n));
 }*/
 
-/* //TODO
+/*
 template <class T, class N>
 void binary_tree<T,N>::post_view(node n){
-	if(!sx_empty(n)) post_view(child_sx(n));
-	if(!dx_empty(n)) post_view(child_dx(n));
+	if(!left_empty(n)) post_view(left(n));
+	if(!right_empty(n)) post_view(right(n));
 	//esamina nodo
 }
 */
 
-/* //TODO
+/*
 template <class T, class N>
 void binary_tree<T,N>::symmetric_view(node n){
-	if(!sx_empty(n)) symmetric_view(child_sx(n));
+	if(!left_empty(n)) symmetric_view(left(n));
 	//esamina nodo
-	if(!dx_empty(n)) symmetric_view(child_dx(n));
+	if(!right_empty(n)) symmetric_view(right(n));
 }
 */
 
@@ -91,8 +91,8 @@ void binary_tree<T,N>::BFS(node n){
 	q.push(n);
 	while(!q.empty()){
 		//esamina q.top
-		if(!sx_empty(q.top())) q.push(child_sx(q.top()));
-		if(!dx_empty(q.top())) q.push(child_dx(q.top()));
+		if(!left_empty(q.top())) q.push(left(q.top()));
+		if(!right_empty(q.top())) q.push(right(q.top()));
 		q.pop();
 	}
 }
@@ -107,13 +107,13 @@ int binary_tree<T,N>::depth(node n){
 template <class T, class N>
 int binary_tree<T,N>::_depth(node n, int i){
 	int depth = i;
-	if(!sx_empty(n)){
-		int tmp = _depth(child_sx(n),i);
+	if(!left_empty(n)){
+		int tmp = _depth(left(n),i);
 		if(tmp>depth)
 			depth = tmp;
 	}
-	if(!dx_empty(n)){
-		int tmp = _depth(child_dx(n),i);
+	if(!right_empty(n)){
+		int tmp = _depth(right(n),i);
 		if(tmp>depth)
 			depth = tmp;
 	}
@@ -139,8 +139,8 @@ int binary_tree<T,N>::_width(node n, int w){
 		int j=0;
 		while(j<i){
 			node top = q.top();
-			if(!sx_empty(top)) q.push(child_sx(top));
-			if(!dx_empty(top)) q.push(child_dx(top));
+			if(!left_empty(top)) q.push(left(top));
+			if(!right_empty(top)) q.push(right(top));
 			q.pop();
 			j++;
 		}
@@ -157,8 +157,8 @@ int binary_tree<T,N>::kSubtree(const node n, const int k) const{
 	while(!q.empty()){
 		node top = q.top();
 		if(sumSubtree(top)==k) result++;
-		if(!sx_empty(top)) q.push(child_sx(top));
-		if(!dx_empty(top)) q.push(child_dx(top));
+		if(!left_empty(top)) q.push(left(top));
+		if(!right_empty(top)) q.push(right(top));
 		q.pop();
 	}
 	return result;
@@ -167,8 +167,8 @@ int binary_tree<T,N>::kSubtree(const node n, const int k) const{
 template <class T, class N>
 int binary_tree<T,N>::sumSubtree(const node n) const{
 	int result = read(n);
-	if(!sx_empty(n)) result+=sumSubtree(child_sx(n));
-	if(!dx_empty(n)) result+=sumSubtree(child_dx(n));
+	if(!left_empty(n)) result+=sumSubtree(left(n));
+	if(!right_empty(n)) result+=sumSubtree(right(n));
 	return result;
 }
 
@@ -177,16 +177,16 @@ int binary_tree<T,N>::maxSumSubtree(const node n) const{
 	int result = sumSubtree(n);
 	queue<node> q;
 
-	if(!sx_empty(n)) q.push(child_sx(n));
-	if(!dx_empty(n)) q.push(child_dx(n));
+	if(!left_empty(n)) q.push(left(n));
+	if(!right_empty(n)) q.push(right(n));
 
 	while(!q.empty()){
 		node top = q.top();
 		int temp = sumSubtree(top);
 
 		if(temp>result) result = temp;
-		if(!sx_empty(n)) q.push(child_sx(top));
-		if(!dx_empty(n)) q.push(child_dx(top));
+		if(!left_empty(n)) q.push(left(top));
+		if(!right_empty(n)) q.push(right(top));
 		q.pop();
 	}
 	return result;
