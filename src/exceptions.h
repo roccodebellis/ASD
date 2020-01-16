@@ -31,12 +31,34 @@ private:
 	char * message;
 };
 
+//DICTIONARY
 struct full_dictionary : public std::length_error {
 	full_dictionary():length_error("Dictionary is full!"){};
 };
 
 struct key_not_exist : public std::invalid_argument {
 	key_not_exist():invalid_argument("Key does not exist!"){};
+};
+
+//BINTREE
+struct node_not_valid : public std::invalid_argument {
+	node_not_valid() : invalid_argument("Node not valid!") {};
+};
+
+struct full_bintree : public std::length_error {
+	full_bintree() : length_error("Full bintree!") {};
+};
+
+struct root_exist : public std::invalid_argument {
+	root_exist() : invalid_argument("Root already exist!") {};
+};
+
+struct empty_bintree : public std::length_error {
+	empty_bintree() : length_error("Empty tree!") {};
+};
+
+struct node_exist : public std::invalid_argument {
+	node_exist() : invalid_argument("Node already exist!") {};
 };
 
 #endif /* EXCEPTIONS_H_ */

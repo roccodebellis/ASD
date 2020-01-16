@@ -15,6 +15,7 @@ const int MAX_DIMENSION = 23;
 template <class E>
 class hash_table : public dictionary<std::string,E> {
 public:
+	//type
 	typedef typename dictionary<std::string,E>::key key;
 	typedef typename dictionary<std::string,E>::value element;
 

@@ -1,6 +1,6 @@
 #include "hash_table.h"
 #include <string>
-
+/* TEST
 int main(void){
 
 	hash_table<std::string> table;
@@ -35,3 +35,4 @@ int main(void){
 
 	std::cout << table<< std::endl;
 }
+*/
