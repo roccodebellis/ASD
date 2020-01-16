@@ -50,9 +50,9 @@ public:
 	void write(const node, const value_type);
 
 	//service function
-	void insert_root(const value_type);
-	void insert_left(const node, const value_type);
-	void insert_right(const node, const value_type);
+	void insertRoot(const value_type);
+	void insertLeft(const node, const value_type);
+	void insertRight(const node, const value_type);
 
 	void pre_view(const node) const;
 	void post_view(const node) const;
@@ -249,7 +249,7 @@ void bintree_array<T>::write(const node u_node, const value_type u_value){
 }
 
 template <class T>
-void bintree_array<T>::insert_root(const value_type u_value) {
+void bintree_array<T>::insertRoot(const value_type u_value) {
 	//PRE: !empty()
 	//POST: T'=(N,A), N={u_node}, A={}. livello(u_node)=0
 	if(empty())
@@ -268,7 +268,7 @@ void bintree_array<T>::insert_root(const value_type u_value) {
 }
 
 template <class T>
-void bintree_array<T>::insert_left(const node u_node,const value_type u_value) {
+void bintree_array<T>::insertLeft(const node u_node,const value_type u_value) {
 	//PRE: !empty(), u appartiene N, sinistrovuoto(u,T)=true
 	//POST: N'=Nu{v}, T' è ottenuto da T aggiungendo v come figlio left di u
 	//if(!empty()) jet in left_empty()
@@ -294,7 +294,7 @@ void bintree_array<T>::insert_left(const node u_node,const value_type u_value) {
 }
 
 template <class T>
-void bintree_array<T>::insert_right(const node u_node,const value_type u_value) {
+void bintree_array<T>::insertRight(const node u_node,const value_type u_value) {
 	//PRE: !empty(), u appartiene N, sinistrovuoto(u,T)=true
 	//POST: N'=Nu{v}, T' è ottenuto da T aggiungendo v come figlio left di u
 	//if(!empty()) jet in right_empty

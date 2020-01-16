@@ -34,9 +34,9 @@ public:
 	virtual value_type read(const node) const =0;
 	virtual void write(const node, const value_type)=0;
 
-	virtual void insert_root(const value_type)=0;
-	virtual void insert_left(const node, const value_type)=0; //TODO non bisogna aggiungere anche delete?
-	virtual void insert_right(const node, const value_type)=0;
+	virtual void insertRoot(const value_type)=0;
+	virtual void insertLeft(const node, const value_type)=0; //TODO non bisogna aggiungere anche delete?
+	virtual void insertRight(const node, const value_type)=0;
 
 	//service function
 	//virtual void pre_view(const node); //TODO
