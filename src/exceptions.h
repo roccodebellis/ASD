@@ -9,6 +9,7 @@
 #define EXCEPTIONS_H_
 
 #include <stdexcept>
+#include <iostream>
 
 struct empty_stack:public std::length_error {
 	empty_stack():length_error("Empty stack!"){};
