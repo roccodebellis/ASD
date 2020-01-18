@@ -14,7 +14,7 @@ public:
 	//copy constructor
 	node(const node<T>&);
 
-	//desctructor
+	//destructor
 	~node();
 
 	//operators
