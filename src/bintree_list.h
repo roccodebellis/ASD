@@ -188,7 +188,7 @@ void bintree_list<T>::write(const node n, const value_type n_data) {
 template <class T>
 typename bintree_list<T>::node bintree_list<T>::search(const node search_n, const value_type search_data) const {
 	if(search_n == nullptr)
-		throw empty_bintree();
+		throw empty_tree();
 	else {
 		if(search_data == search_n->_data)
 			return search_n;

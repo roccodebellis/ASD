@@ -33,8 +33,8 @@ public:
 	void insert(const value_type &, position);
 	void erase(position);
 
-	int last() const;
-	int search(const value_type &) const;
+	position last() const;
+	position search(const value_type &) const;
 	void remove(position);
 	void removeValue(const value_type &);
 	void clear();
@@ -142,11 +142,10 @@ typename list_vector<T>::position list_vector<T>::previous(position pos) const {
 
 template <class T>
 void list_vector<T>::insert(const value_type & e, position pos){
+	if(_dimension == _length)
+		_resize(_dimension*2);
 	if((0 < pos) && (pos <= _length+1)){
-		if(_dimension == _length)
-			_resize(_dimension*2);
-
-		for(int i=0; i<_length; i++)
+		for(int i=_length; i>=pos; i--)
 			_elements[i] = _elements[i-1];
 		_elements[pos-1] = e;
 		_length++;
@@ -159,12 +158,12 @@ void list_vector<T>::erase(position pos){
 }
 
 template <class T>
-int list_vector<T>::last() const{
-	return (_length > 0) ? (_length-1) : _length;
+typename list_vector<T>::position list_vector<T>::last() const{
+	return  _length;
 }
 
 template <class T>
-int list_vector<T>::search(const value_type & e) const{
+typename list_vector<T>::position list_vector<T>::search(const value_type & e) const{
 	int i = begin();
 	while(!end(i)){
 		if(_elements[i] == e)
@@ -177,8 +176,8 @@ int list_vector<T>::search(const value_type & e) const{
 template <class T>
 void list_vector<T>::remove(position pos){
 	if((0 < pos) && (pos < _length+1)){ //FIXME <_length
-		for(int i=pos; i<_length-1; i++)
-			_elements[i] = _elements[i+1];
+		for(int i=pos; i<=_length-1; i++)
+			_elements[i-1] = _elements[i];
 		_length--;
 	}
 

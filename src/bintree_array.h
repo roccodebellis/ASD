@@ -137,7 +137,7 @@ template <class T>
 typename bintree_array<T>::node bintree_array<T>::root() const {
 	if(!empty())
 		return root_node;
-	else throw empty_bintree();
+	else throw empty_tree();
 }
 
 template <class T>
@@ -149,7 +149,7 @@ typename bintree_array<T>::node bintree_array<T>::parent(const node u_node) cons
 		if (u_node != root_node)
 			return tree[u_node].parent;
 		else throw node_not_valid();
-	else throw empty_bintree();
+	else throw empty_tree();
 }
 
 template <class T>
@@ -161,7 +161,7 @@ typename bintree_array<T>::node bintree_array<T>::left(const node u_node) const 
 		if (!left_empty(u_node))
 			return tree[u_node].left;
 		else throw node_not_valid();
-	else throw empty_bintree();
+	else throw empty_tree();
 }
 
 template <class T>
@@ -173,7 +173,7 @@ typename bintree_array<T>::node bintree_array<T>::right(const node u_node) const
 		if (!right_empty(u_node))
 			return tree[u_node].right;
 		else throw node_not_valid();
-	else throw empty_bintree();
+	else throw empty_tree();
 }
 
 template <class T>
@@ -184,7 +184,7 @@ bool bintree_array<T>::left_empty(const node u_node) const {
 	//FIXME if(u_node>=0 && u_node<max_dimension) else throw node_not_valid();
 	if(!empty())
 		return (tree[u_node].left == NIL);
-	else throw empty_bintree();
+	else throw empty_tree();
 }
 
 template <class T>
@@ -194,7 +194,7 @@ bool bintree_array<T>::right_empty(const node u_node) const {
 	//FIXME if(u_node>=0 && u_node<max_dimension) else throw node_not_valid();
 	if(!empty())
 		return (tree[u_node].right == NIL);
-	else throw empty_bintree();
+	else throw empty_tree();
 }
 
 template <class T>
@@ -223,7 +223,7 @@ void bintree_array<T>::erase(const node u_node){
 		tree[u_node].right = NIL;
 		tree[u_node].parent = NIL;
 	} else throw node_not_valid();
-	//else throw empty_bintree();
+	//else throw empty_tree();
 	return;
 }
 
@@ -287,9 +287,9 @@ void bintree_array<T>::insertLeft(const node u_node,const value_type u_value) {
 				free_node = (tree[(free_node+1) % max_length].parent==NIL) ? (free_node+1) % max_length : find_free();
 				num_nodes++;
 			} else throw node_exist();
-		else throw full_bintree();
+		else throw full_tree();
 	else throw node_not_valid();
-	//else throw empty_bintree();
+	//else throw empty_tree();
 	return;
 }
 
@@ -311,9 +311,9 @@ void bintree_array<T>::insertRight(const node u_node,const value_type u_value) {
 				free_node = (tree[(free_node+1) % max_length].parent==NIL) ? (free_node+1) % max_length : find_free();
 				num_nodes++;
 			} else throw node_exist();
-		else throw full_bintree();
+		else throw full_tree();
 	else throw node_not_valid();
-	//else throw empty_bintree();
+	//else throw empty_tree();
 	return;
 }
 

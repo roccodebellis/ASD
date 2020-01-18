@@ -1,15 +1,40 @@
 #include "list_vector.h"
-
+/* TEST
 int main(void){
 	list_vector<int> list;
 
 	for(int i=0; i<10; i++)
-		list.pushFront(i);
-		//list.insert(i,list.last());
-	list.removeValue(10);
+		list.pushBack(i);
+	//list.insert(i,list.last());
+
+
+	std::cout << "begin: " << list.begin() << std::endl;
+	std::cout << "end: " << list.last() << std::endl;
+
+	std::cout << "lista: " << list << std::endl;
+
+	//list.remove(list.last());
+	std::cout << "end: " << list.last() << std::endl;
+	std::cout << "last: " << list.read(list.last()) << std::endl;
+	list.insert(10,list.last()+1);
+	list.insert(-1,list.begin());
 
 	if(list.empty())
 		std::cout << "lista vuota" << std::endl;
 	else
 		std::cout << "lista: " << list << std::endl;
+
+
+
+	list.remove(list.begin());
+
+	std::cout << "listaaa : [";
+	int it = list.begin();
+	while(!list.end(it)){
+		std::cout << list.read(it) << " ";
+		it = list.next(it);
+	}
+	std::cout << "]" << std::endl;
+
 }
+*/

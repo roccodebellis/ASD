@@ -41,25 +41,29 @@ struct key_not_exist : public std::invalid_argument {
 	key_not_exist():invalid_argument("Key does not exist!"){};
 };
 
-//BINTREE
+//BINTREE //TREE
 struct node_not_valid : public std::invalid_argument {
 	node_not_valid() : invalid_argument("Node not valid!") {};
 };
 
-struct full_bintree : public std::length_error {
-	full_bintree() : length_error("Full bintree!") {};
+struct full_tree : public std::length_error {
+	full_tree() : length_error("Full bintree!") {};
 };
 
 struct root_exist : public std::invalid_argument {
 	root_exist() : invalid_argument("Root already exist!") {};
 };
 
-struct empty_bintree : public std::length_error {
-	empty_bintree() : length_error("Empty tree!") {};
+struct empty_tree : public std::length_error {
+	empty_tree() : length_error("Empty tree!") {};
 };
 
 struct node_exist : public std::invalid_argument {
 	node_exist() : invalid_argument("Node already exist!") {};
 };
 
+//TREE
+struct is_leaf : public std::invalid_argument {
+	is_leaf() : invalid_argument("Node does not have child (is a leaf)!") {};
+};
 #endif /* EXCEPTIONS_H_ */
