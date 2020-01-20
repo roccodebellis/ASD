@@ -11,10 +11,12 @@
 #include <stdexcept>
 #include <iostream>
 
+
 struct empty_stack:public std::length_error {
 	empty_stack():length_error("Empty stack!"){};
 };
 
+//QUEUE //PRIORITY_QUEUE
 struct empty_queue:public std::length_error {
 	empty_queue():length_error("Empty queue!"){};
 };
@@ -47,7 +49,7 @@ struct node_not_valid : public std::invalid_argument {
 };
 
 struct full_tree : public std::length_error {
-	full_tree() : length_error("Full bintree!") {};
+	full_tree() : length_error("Full tree!") {};
 };
 
 struct root_exist : public std::invalid_argument {
@@ -66,4 +68,9 @@ struct node_exist : public std::invalid_argument {
 struct is_leaf : public std::invalid_argument {
 	is_leaf() : invalid_argument("Node does not have child (is a leaf)!") {};
 };
+
+struct is_root : public std::invalid_argument {
+	is_root() : invalid_argument("Node does not have parent (is the root)!") {};
+};
+
 #endif /* EXCEPTIONS_H_ */

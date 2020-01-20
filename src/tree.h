@@ -14,10 +14,10 @@ public:
 	virtual node parent(node) const = 0;
 	virtual bool leaf(node) const = 0;
 	virtual node firstChild(node) const = 0;
-	virtual bool lastSibiling(node) const = 0;
-	virtual node nextSibiling(node) const = 0;
-	//virtual void insertFirstSubTree(node, tree &) = 0;
-	//virtual void insertSubTree(node, tree &) = 0;
+	virtual bool lastSibling(node) const = 0;
+	virtual node nextSibling(node) const = 0;
+	virtual void insertFirstSubTree(node, tree<I,N> &) = 0; //not defined in tree_list
+	virtual void insertSubTree(node, tree<I,N> &) = 0; //not defined in tree_list
 	virtual void removeSubTree(node) = 0;
 
 	virtual void writeNode(node, item) = 0;

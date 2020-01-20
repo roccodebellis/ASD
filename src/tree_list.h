@@ -24,8 +24,8 @@ public:
 	node parent(node) const ;
 	bool leaf(node) const;
 	node firstChild(node) const;
-	bool lastSibiling(node) const;
-	node nextSibiling(node) const;
+	bool lastSibling(node) const;
+	node nextSibling(node) const;
 	//void insertFirstSubTree(node, tree_list<I> &);
 	//void insertSubTree(node, tree_list<I> &);
 	void removeSubTree(node);
@@ -127,7 +127,7 @@ typename tree_list<I>::node tree_list<I>::firstChild(node n) const {
 }
 
 template <class I>
-bool tree_list<I>::lastSibiling(node n) const {
+bool tree_list<I>::lastSibling(node n) const {
 	position_list child_itr;
 	node n_parent = parent(n);
 	child_itr = _nodes[n_parent].childs.begin();
@@ -137,8 +137,8 @@ bool tree_list<I>::lastSibiling(node n) const {
 }
 
 template <class I>
-typename tree_list<I>::node tree_list<I>::nextSibiling(node n) const {
-	if(!lastSibiling(n)){
+typename tree_list<I>::node tree_list<I>::nextSibling(node n) const {
+	if(!lastSibling(n)){
 		position_list child_itr;
 		node n_parent = parent(n);
 		child_itr = _nodes[n_parent].childs.begin();
