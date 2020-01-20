@@ -1,6 +1,6 @@
 #include "priority_queue_array.h"
 #include <iostream>
-/* TEST */
+/* TEST
 int main(void) {
 	priority_queue_array<int> C;
 
@@ -39,4 +39,4 @@ int main(void) {
 	//std::cout << "Min: " << C.min() << std::endl;
 
 }
-
+*/
