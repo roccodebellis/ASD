@@ -1,5 +1,5 @@
 #include "bintree_list.h"
-/* TEST
+/* TEST */
 int main(void){
 	bintree_list<char> albero;
 
@@ -7,7 +7,6 @@ int main(void){
 
 	albero.insertRoot('h');
 	//albero.insert_root(3);
-
 	albero.insertRight(albero.root(),'c');
 	albero.insertLeft(albero.root(),'a');
 	albero.insertLeft(albero.left(albero.root()),'d');
@@ -44,6 +43,7 @@ int main(void){
 	tree.insert(9);
 	tree.insert(10);
 	tree.insert(11);
+	tree.insert(12);
 
 	std::cout << std::endl << "preordine:" << std::endl;
 	tree.pre_view(tree.root());
@@ -60,9 +60,6 @@ int main(void){
 
 
 
-
-
-
 	return 0;
 }
-*/
+

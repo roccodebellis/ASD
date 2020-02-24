@@ -2,7 +2,8 @@
 #define LISTE_P_H_
 
 #include <stdexcept>
-#include "linear_list.h"
+
+#include "list.h"
 
 
 //NOT TESTED - NOT TESTED - NOT TESTED - NOT TESTED - NOT TESTED
@@ -29,10 +30,10 @@ public:
 
 
 template< class T >
-class List_pointer : public linear_list<T, Nodo<T>*>{
+class List_pointer : public List<T, Nodo<T>*>{
 public:
-	typedef typename linear_list<T, Nodo<T>*>::value_type value_type;
-	typedef typename linear_list<T, Nodo<T>*>::position position;
+	typedef typename List<T, Nodo<T>*>::value_type value_type;
+	typedef typename List<T, Nodo<T>*>::position position;
 
 	// costruttori
 	List_pointer();

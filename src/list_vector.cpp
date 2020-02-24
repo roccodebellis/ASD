@@ -18,6 +18,14 @@ int main(void){
 	std::cout << "last: " << list.read(list.last()) << std::endl;
 	list.insert(10,list.last()+1);
 	list.insert(-1,list.begin());
+	list.insert(-1,list.last());
+	list.insert(-1,list.last()+1);
+	list.insert(1,list.last());
+	list.insert(3,list.last()+1);
+	list.insert(1,list.last());
+	list.insert(11,list.last()+1);
+	list.insert(4,list.last());
+	list.insert(2,list.last()+1);
 
 	if(list.empty())
 		std::cout << "lista vuota" << std::endl;
@@ -25,8 +33,8 @@ int main(void){
 		std::cout << "lista: " << list << std::endl;
 
 
-
-	list.remove(list.begin());
+	list.epurazione();
+	//list.remove(list.begin());
 
 	std::cout << "listaaa : [";
 	int it = list.begin();

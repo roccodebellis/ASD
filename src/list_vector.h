@@ -1,15 +1,15 @@
 #ifndef LIST_VECTOR_H_
 #define LIST_VECTOR_H_
 
-#include "linear_list.h"
+#include "list.h"
 #define DEFAULT_SIZE 10
 
 template <class T>
-class list_vector : public linear_list<T, int>{
+class list_vector : public List<T, int>{
 public:
 	//type
-	typedef typename linear_list<T, int>::value_type value_type;
-	typedef typename linear_list<T, int>::position position;
+	typedef typename List<T, int>::value_type value_type;
+	typedef typename List<T, int>::position position;
 
 	//constructor
 	list_vector();
